@@ -1,31 +1,77 @@
-public abstract class Team4SortCompetition extends SortCompetition {
+public class Team4SortCompetition extends SortCompetition {
 
-    // Use Merge sort in order to organize the integer array + Helper Methods
+    // Use Selection sort in order to organize the integer array + Helper Methods
 
    public int challengeOne(int[] arr) {
-        sort(arr);
-        return 0;
+       int left = 0;
+       int right = arr.length-1;
+        sort(arr,left,right);
+        return (findMedian(arr));
     }
+    public void sort(int[] arr,int left,int right)
+    {
+        if(left<right){
+            int pivot = partition(arr,left,right);
+            sort(arr,left,pivot-1);
+            sort(arr,pivot+1,right);
+        }
+    }
+    public int partition(int[] arr, int left, int right)
+    {
+        int temp;
+       int pivot = arr[right];
+       int i = left-1;
+       for(int j = left ;j<right;j++){
+           if(arr[j]<= pivot){
+               i++;
+               temp = arr[i];
+               arr[i] = arr[j];
+               arr[j] = temp;
+           }
+       }
+        temp = arr[i+1];
+        arr[i+1] = arr[right];
+        arr[right] = temp;
+        return i+1;
+    }
+    /*
     public int[] sort(int[] arr) {
         int l = arr.length;
         int[] sorted = new int[l];
         int idx = 0;
-        int i = 0;
-        int min = arr[i];
-        int cont = arr[idx];
-        int min1 = findMin(arr,min,cont);
+        int min = arr[0];
+        int cont = arr[0];
+        boolean sort = false;
+        while(!sort) {
+            sort = true;
+            findMin(arr, sorted, min, cont, idx,sort);
+        }
         return sorted;
     }
-    public int findMin(int[]arr,int min, int cont)
+    public void findMin(int[]arr,int[] sorted,int min, int cont,int idx,boolean sort)
     {
-        while(idx < l) {
-            if(min < cont) {
+        int x =0;
+        while(idx < arr.length) {
+            if(min > arr[idx]) {
+                sort = false;
                 min = cont;
+                sorted[x] = arr[idx];
             }
-            else{
-
-            }
+            idx++;
         }
+    }
+
+    */
+    public int findMedian(int[] arr)
+    {
+        int med =0;
+        int l = arr.length;
+        if(l%2 > 0){
+            l++;
+        }
+        l = l/2;
+        med = arr[l];
+        return med;
     }
     /*
     public int merge(int[] arr)
